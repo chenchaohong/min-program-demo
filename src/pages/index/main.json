@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+        "wxc-toast": "/static/MinUi/@minui/wxc-toast/dist/index"
+    }
+}
