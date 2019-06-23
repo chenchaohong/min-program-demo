@@ -30,7 +30,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+.page {
+    padding: 10px;
+}
 .container {
   height: 100%;
   display: flex;

@@ -79,7 +79,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .part {
     margin: 10px;
 }

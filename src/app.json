@@ -1,5 +1,10 @@
 {
     "pages": [
+        "pages/association/main",
+        "pages/life/main",
+        "pages/publish/main",
+        "pages/discover/main",
+        "pages/my/main",
         "pages/index/main",
         "pages/logs/main",
         "pages/counter/main",
@@ -8,7 +13,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "WeChat",
+        "navigationBarTitleText": "章鱼校园",
         "navigationBarTextStyle": "black"
     },
     "tabBar": {
@@ -18,28 +23,37 @@
         "borderStyle": "white",
 
         "list": [{
-            "text": "首页",
-            "pagePath": "pages/index/main",
-            "iconPath": "static/tabs/home.png",
-            "selectedIconPath": "static/tabs/home-active.png"
+            "text": "社团",
+            "pagePath": "pages/association/main",
+            "iconPath": "static/tabs/association.png",
+            "selectedIconPath": "static/tabs/association-active.png"
         }, {
-            "text": "日志",
-            "pagePath": "pages/logs/main",
-            "iconPath": "static/tabs/orders.png",
-            "selectedIconPath": "static/tabs/orders-active.png"
-        }],
-
-        "items": [{
-            "name": "首页",
-            "pagePath": "pages/index/main",
-            "icon": "static/tabs/home.png",
-            "activeIcon": "static/tabs/home-active.png"
+            "text": "生活",
+            "pagePath": "pages/life/main",
+            "iconPath": "static/tabs/life.png",
+            "selectedIconPath": "static/tabs/life-active.png"
         }, {
-            "name": "日志",
-            "pagePath": "pages/logs/main",
-            "icon": "static/tabs/orders.png",
-            "activeIcon": "static/tabs/orders-active.png"
+            "text": "发布",
+            "pagePath": "pages/publish/main",
+            "iconPath": "static/tabs/add.png",
+            "selectedIconPath": "static/tabs/add-active.png"
+        }, {
+            "text": "发现",
+            "pagePath": "pages/discover/main",
+            "iconPath": "static/tabs/discover.png",
+            "selectedIconPath": "static/tabs/discover-active.png"
+        }, {
+            "text": "我的",
+            "pagePath": "pages/my/main",
+            "iconPath": "static/tabs/my.png",
+            "selectedIconPath": "static/tabs/my-active.png"
         }],
         "position": "bottom"
+    },
+    "usingComponents": {
+        "van-tab": "/static/vant-weapp/tab/index",
+        "van-tabs": "/static/vant-weapp/tabs/index",
+        "van-button": "/static/vant-weapp/button/index",
+        "van-search": "/static/vant-weapp/search/index"
     }
 }
