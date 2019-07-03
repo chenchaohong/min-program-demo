@@ -1,14 +1,22 @@
 {
     "pages": [
         "pages/association/main",
+        "pages/association/acticleDetail/main",
+        "pages/association/organizationList/main",
+        "pages/association/organizationDetail/main",
         "pages/life/main",
         "pages/publish/main",
         "pages/discover/main",
         "pages/my/main",
+        "pages/my/dynamicDetail/main",
+        "pages/my/update/main",
+        "pages/my/follow/main",
+        "pages/my/sufferFollow/main",
+        "pages/my/like/main",
+        "pages/my/sufferLike/main",
+        "pages/person/main",
         "pages/index/main",
-        "pages/logs/main",
-        "pages/counter/main",
-        "pages/scan/main"
+        "pages/search/main"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -51,9 +59,14 @@
         "position": "bottom"
     },
     "usingComponents": {
+        "van-row": "/static/vant-weapp/row/index",
+        "van-col": "/static/vant-weapp/col/index",
         "van-tab": "/static/vant-weapp/tab/index",
         "van-tabs": "/static/vant-weapp/tabs/index",
         "van-button": "/static/vant-weapp/button/index",
-        "van-search": "/static/vant-weapp/search/index"
+        "van-search": "/static/vant-weapp/search/index",
+        "van-icon": "/static/vant-weapp/icon/index",
+        "van-toast": "/static/vant-weapp/toast/index",
+        "van-loading": "/static/vant-weapp/loading/index"
     }
 }

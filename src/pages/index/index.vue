@@ -11,18 +11,12 @@
     </div>
 
     <div class="part">
-        <a href="/pages/scan/main">去扫码</a>
-    </div>
-
-    <div class="part">
         <a @click="show">弹出提示</a>
     </div>
 
     <div class="part">
         <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
     </div>
-
-    <wxc-toast :is-show="showToast" text="提示成功!" duration="2000"></wxc-toast>
 
     <!-- <div class="all">
         <div class="left">

@@ -1,5 +1,2 @@
 {
-    "usingComponents": {
-        "wxc-toast": "/static/@minui/wxc-toast/dist/index"
-    }
 }

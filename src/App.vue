@@ -43,6 +43,21 @@ export default {
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+.my-search {
+    border: 1px solid #eee;
+    height: 30px;
+    margin:10px 16px;
+    border-radius: 20px;
+    color: #999;
+    display: flex;
+    line-height: 30px;
+    padding-left: 10px;
+    .placeholder {
+        padding-left: 5px;
+        font-size: 14px;
+        align-items: center;
+    }
+}
 /* this rule will be remove */
 * {
   transition: width 2s;

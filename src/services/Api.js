@@ -63,9 +63,9 @@ class ApiManager {
             return fly.post(uri, data, config)
         } else {
             console.log(`url: ${uri}`)
-            console.log(`param: ${data}`)
+            console.log(`param: ${data && JSON.stringify(data)}`)
             let result = require(`./mock${uri}`)
-            return result
+            return Promise.resolve(result)
         }
     }
 
