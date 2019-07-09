@@ -53,6 +53,13 @@ export default {
             styleHeight: ''
         }
     },
+    onShow () {
+        if (mpvue.getStorageSync('isShow')) {
+            this.recommend()
+            this.follow()
+            mpvue.removeStorageSync('isShow')
+        }
+    },
     created () {
         let _this = this
         wx.getSystemInfo({
@@ -61,6 +68,8 @@ export default {
                 _this.styleHeight = height
             }
         })
+    },
+    mounted () {
         this.recommend()
         this.follow()
     },

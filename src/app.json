@@ -14,9 +14,12 @@
         "pages/my/sufferFollow/main",
         "pages/my/like/main",
         "pages/my/sufferLike/main",
+        "pages/my/organization/main",
+        "pages/my/organization/search/main",
+        "pages/my/organization/apply/main",
         "pages/person/main",
-        "pages/index/main",
-        "pages/search/main"
+        "pages/search/main",
+        "pages/auth/main"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -67,6 +70,14 @@
         "van-search": "/static/vant-weapp/search/index",
         "van-icon": "/static/vant-weapp/icon/index",
         "van-toast": "/static/vant-weapp/toast/index",
-        "van-loading": "/static/vant-weapp/loading/index"
+        "van-loading": "/static/vant-weapp/loading/index",
+        "van-cell": "/static/vant-weapp/cell/index",
+        "van-field": "/static/vant-weapp/field/index",
+        "van-dialog": "/static/vant-weapp/dialog/index",
+        "van-radio": "/static/vant-weapp/radio/index",
+        "van-popup": "/static/vant-weapp/popup/index",
+        "van-radio-group": "/static/vant-weapp/radio-group/index",
+        "van-picker": "/static/vant-weapp/picker/index",
+        "van-datetime-picker": "/static/vant-weapp/datetime-picker/index"
     }
 }

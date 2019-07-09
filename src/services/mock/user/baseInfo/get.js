@@ -18,12 +18,25 @@ module.exports = {
         "followStatus": "2", // 关注状态  0-未关注 1-已关注 2-相互关注
         "organization": [
             {
+                "organizationId": "10001",
                 "organizationName": "计算机协会", // 计算机协会
-                "organizationSortName": "计协" // 计协
+                "organizationSortName": "计协", // 计协
+                "organizationImg": "/static/images/logo/logo1.png",
+                "auditStatus": "0" // 审核状态: 0、待审核 1正常 2、离岗'
             },
             {
+                "organizationId": "10002",
                 "organizationName": "动漫社",
-                "organizationSortName": "动漫"
+                "organizationSortName": "动漫",
+                "organizationImg": "/static/images/logo/logo2.png",
+                "auditStatus": "1" // 审核状态: 0、待审核 1正常 2、离岗'
+            },
+            {
+                "organizationId": "10003",
+                "organizationName": "社团3",
+                "organizationSortName": "社团3",
+                "organizationImg": "/static/images/logo/logo3.png",
+                "auditStatus": "2" // 审核状态: 0、待审核 1正常 2、离岗'
             }
         ]
     }

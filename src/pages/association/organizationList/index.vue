@@ -3,7 +3,7 @@
         <van-tabs z-index="999" :active="active" @change="tabChange">
             <div class="my-search" @click="toSearch">
                 <van-icon name="search" size="15px" />
-                <span class="placeholder">搜索社团或信息</span>
+                <span class="placeholder">搜索社团</span>
             </div>
             <van-tab v-for="(tab, tabsIndex) in tabs" :key="tabsIndex" :title="tab.title" :id="tab.id">
                 <scroll-view scroll-y="true" :style="{height: styleHeight + 'px'}" bindscrolltolower="onPullDownRefresh">

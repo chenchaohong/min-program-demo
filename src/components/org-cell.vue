@@ -7,7 +7,7 @@
                 <span>{{data.organizationSlogan}}</span>
             </div>
         </div>
-        <span class="like">
+        <span class="like" v-if="!hideFollowBtn">
             <followBtn :followId="data.organizationId" :followStatus="data.followStatus" type="1"></followBtn>
         </span>
     </div>
@@ -17,7 +17,13 @@
 import followBtn from '@/components/follow-btn'
 export default {
     name: 'orgCell',
-    props: ['data'],
+    props: {
+        data: Object,
+        hideFollowBtn: { // 隐藏关注按钮
+            type: Boolean,
+            defaule: false
+        }
+    },
     components: {
         followBtn
     },
@@ -52,6 +58,9 @@ export default {
                 overflow: hidden;
                 white-space:nowrap;
                 text-overflow:ellipsis;
+            }
+            span:nth-child(1) {
+                color: #000;
             }
         }
     }

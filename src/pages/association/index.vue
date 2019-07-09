@@ -48,6 +48,14 @@ export default {
             styleHeight: ''
         }
     },
+    onShow () {
+        console.log('onshow')
+        if (mpvue.getStorageSync('isShow')) {
+            this.getOrganizationList()
+            this.getArticleAll()
+            mpvue.removeStorageSync('isShow')
+        }
+    },
     created () {
         let _this = this
         wx.getSystemInfo({
@@ -56,6 +64,8 @@ export default {
                 _this.styleHeight = height
             }
         })
+    },
+    mounted () {
         this.getOrganizationList()
         this.getArticleAll()
     },

@@ -1,33 +1,33 @@
 <template>
     <div class="page">
+        <scroll-view scroll-y="true" :style="{height: styleHeight + 'px'}" bindscrolltolower="onPullDownRefresh">
+            <div class="part">
+                <personCell round :data="friend" v-for="(friend, findex) in list" :key="findex" @click="toFriend(friend.userId)"></personCell>
+            </div>
+            <div class="loading" v-if="page.loading">
+                <spinnerLoading></spinnerLoading>
+            </div>
+        </scroll-view>
     </div>
 </template>
 
 <script>
 import spinnerLoading from '@/components/spinner-loading'
-import dynamic from '@/components/dynamic'
+import personCell from '@/components/person-cell'
 export default {
     components: {
         spinnerLoading,
-        dynamic
+        personCell
     },
     data () {
         return {
-            tabActive: 0,
-            pageRecommend: {
+            page: {
                 pageIndex: 1,
                 pageSize: 10,
                 hasNext: true,
                 loading: false
             },
-            pageFollow: {
-                pageIndex: 1,
-                pageSize: 10,
-                hasNext: true,
-                loading: false
-            },
-            recommendList: [],
-            followList: [],
+            list: [],
             styleHeight: ''
         }
     },
@@ -39,48 +39,34 @@ export default {
                 _this.styleHeight = height
             }
         })
-        this.recommend()
-        this.follow()
+    },
+    mounted () {
+        this.followFriend()
     },
     onPullDownRefresh () {
-        if (this.tabActive === 0) {
-            if (this.pageRecommend.hasNext) {
-                this.pageRecommend.loading = true
-                this.pageRecommend.pageIndex += 1
-                this.recommend()
-            }
-        } else {
-            if (this.pageFollow.hasNext) {
-                this.pageFollow.loading = true
-                this.pageFollow.pageIndex += 1
-                this.follow()
-            }
+        if (this.page.hasNext) {
+            this.page.loading = true
+            this.page.pageIndex += 1
+            this.followFriend()
         }
     },
     methods: {
-        onChange (event) {
-            this.tabActive = event.mp.detail.index
-        },
-        recommend () {
-            this.$http.post('/user/article/recommend', {
-                type: '1',
-                pageIndex: this.pageRecommend.pageIndex,
-                pageSize: this.pageRecommend.pageSize
+        followFriend () {
+            this.$http.post('/user/baseInfo/myfans', {
+                pageIndex: this.page.pageIndex,
+                pageSize: this.page.pageSize
             }).then(data => {
-                this.pageRecommend.loading = false
-                this.pageRecommend.hasNext = data.page.hasNext
-                this.recommendList = this.recommendList.concat(data.data)
+                this.page.loading = false
+                this.page.hasNext = data.page.hasNext
+                this.list = this.list.concat(data.data)
             })
         },
-        follow () {
-            this.$http.post('/user/article/recommend', {
-                type: '2',
-                pageIndex: this.pageFollow.pageIndex,
-                pageSize: this.pageFollow.pageSize
-            }).then(data => {
-                this.pageFollow.loading = false
-                this.pageFollow.hasNext = data.page.hasNext
-                this.followList = this.followList.concat(data.data)
+        toFriend (id) {
+            this.$router.push({
+                path: '/pages/person/main',
+                query: {
+                    userId: id
+                }
             })
         }
     }
@@ -88,14 +74,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// div /deep/ .van-tabs__wrap {
-//     position: fixed;
-// }
-.result-item {
-    margin-top: 15px;
-}
-.result-item + .result-item  {
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-}
 </style>

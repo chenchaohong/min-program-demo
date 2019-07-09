@@ -2,11 +2,6 @@
     <div class="page">
         <personHead :personInfo="personInfo" :statistics="statistics"></personHead>
         <scroll-view scroll-y="true" :style="{height: styleHeight + 'px'}" bindscrolltolower="onPullDownRefresh">
-            <!-- <div class="my-team">
-                <cellImg src="/static/images/team.png" text="我的团队"></cellImg>
-                <cellImg src="/static/images/question.png" text="常见问题"></cellImg>
-                <cellImg src="/static/images/about.png" text="联系我们"></cellImg>
-            </div> -->
             <shareBtn>分享给朋友</shareBtn>
             <personDynamic v-for="(article, aIndex) in articleList" :article="article" :key="aIndex"></personDynamic>
         </scroll-view>

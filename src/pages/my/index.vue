@@ -3,15 +3,16 @@
         <personHead :personInfo="personInfo" :statistics="statistics" isMy></personHead>
         <scroll-view scroll-y="true" :style="{height: styleHeight + 'px'}" bindscrolltolower="onPullDownRefresh">
             <div class="my-team">
-                <cellImg src="/static/images/team.png" text="我的社团"></cellImg>
-                <cellImg src="/static/images/question.png" text="常见问题"></cellImg>
-                <cellImg src="/static/images/about.png" text="联系我们"></cellImg>
+                <cellImg src="/static/images/team.png" text="我的社团" @click="$router.push('/pages/my/organization/main')"></cellImg>
+                <cellImg src="/static/images/question.png" text="常见问题" @click="unDevelop"></cellImg>
+                <cellImg src="/static/images/about.png" text="联系我们" @click="unDevelop"></cellImg>
             </div>
             <shareBtn>分享给朋友</shareBtn>
             <div class="m-dynamic">
                 <personDynamic v-for="(article, aIndex) in articleList" :article="article" :key="aIndex"></personDynamic>
             </div>
         </scroll-view>
+        <van-toast id="van-toast" />
     </div>
 </template>
 
@@ -51,7 +52,15 @@ export default {
                 _this.styleHeight = height
             }
         })
+    },
+    mounted () {
         this.getPersonInfo()
+    },
+    onShow () {
+        if (mpvue.getStorageSync('isShow')) {
+            this.getPersonInfo()
+            mpvue.removeStorageSync('isShow')
+        }
     },
     onPullDownRefresh () {
         if (this.page.hasNext) {
@@ -66,6 +75,7 @@ export default {
             }).then(data => {
                 this.personInfo = data.data
                 this.userId = data.data.userId
+                mpvue.setStorageSync('personInfo', this.personInfo)
                 this.getStatistics()
                 this.getArticle()
             })
@@ -87,6 +97,9 @@ export default {
                 this.page.hasNext = data.page.hasNext
                 this.articleList = this.articleList.concat(data.data)
             })
+        },
+        unDevelop () {
+            this.$toast('敬请期待')
         }
     }
 }

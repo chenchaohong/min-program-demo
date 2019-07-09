@@ -1,33 +1,36 @@
 <template>
     <div class="page">
+        <scroll-view class="list" scroll-y="true" :style="{height: styleHeight + 'px'}" bindscrolltolower="onPullDownRefresh">
+            <div class="item" v-for="(item, index) in list" :key="index" @click="toArticle(item.articleId)">
+                <img :class="{'round': item.type == '1'}" :src="item.image" alt="">
+                <div class="desc">
+                    <span>{{item.name}}</span>
+                    <span v-if="item.type == '1'">{{item.content}}</span>
+                    <span v-else>{{item.title}}</span>
+                </div>
+            </div>
+            <div class="loading" v-if="page.loading">
+                <spinnerLoading></spinnerLoading>
+            </div>
+        </scroll-view>
     </div>
 </template>
 
 <script>
 import spinnerLoading from '@/components/spinner-loading'
-import dynamic from '@/components/dynamic'
 export default {
     components: {
-        spinnerLoading,
-        dynamic
+        spinnerLoading
     },
     data () {
         return {
-            tabActive: 0,
-            pageRecommend: {
+            page: {
                 pageIndex: 1,
                 pageSize: 10,
                 hasNext: true,
                 loading: false
             },
-            pageFollow: {
-                pageIndex: 1,
-                pageSize: 10,
-                hasNext: true,
-                loading: false
-            },
-            recommendList: [],
-            followList: [],
+            list: [],
             styleHeight: ''
         }
     },
@@ -39,48 +42,34 @@ export default {
                 _this.styleHeight = height
             }
         })
-        this.recommend()
-        this.follow()
+    },
+    mounted () {
+        this.followFriend()
     },
     onPullDownRefresh () {
-        if (this.tabActive === 0) {
-            if (this.pageRecommend.hasNext) {
-                this.pageRecommend.loading = true
-                this.pageRecommend.pageIndex += 1
-                this.recommend()
-            }
-        } else {
-            if (this.pageFollow.hasNext) {
-                this.pageFollow.loading = true
-                this.pageFollow.pageIndex += 1
-                this.follow()
-            }
+        if (this.page.hasNext) {
+            this.page.loading = true
+            this.page.pageIndex += 1
+            this.followFriend()
         }
     },
     methods: {
-        onChange (event) {
-            this.tabActive = event.mp.detail.index
-        },
-        recommend () {
-            this.$http.post('/user/article/recommend', {
-                type: '1',
-                pageIndex: this.pageRecommend.pageIndex,
-                pageSize: this.pageRecommend.pageSize
+        followFriend () {
+            this.$http.post('/user/baseInfo/mylikedlist', {
+                pageIndex: this.page.pageIndex,
+                pageSize: this.page.pageSize
             }).then(data => {
-                this.pageRecommend.loading = false
-                this.pageRecommend.hasNext = data.page.hasNext
-                this.recommendList = this.recommendList.concat(data.data)
+                this.page.loading = false
+                this.page.hasNext = data.page.hasNext
+                this.list = this.list.concat(data.data)
             })
         },
-        follow () {
-            this.$http.post('/user/article/recommend', {
-                type: '2',
-                pageIndex: this.pageFollow.pageIndex,
-                pageSize: this.pageFollow.pageSize
-            }).then(data => {
-                this.pageFollow.loading = false
-                this.pageFollow.hasNext = data.page.hasNext
-                this.followList = this.followList.concat(data.data)
+        toArticle (id) {
+            this.$router.push({
+                path: '/pages/my/dynamicDetail/main',
+                query: {
+                    articleId: id
+                }
             })
         }
     }
@@ -88,14 +77,38 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// div /deep/ .van-tabs__wrap {
-//     position: fixed;
-// }
-.result-item {
-    margin-top: 15px;
-}
-.result-item + .result-item  {
-    border-top: 1px solid #eee;
-    padding-top: 15px;
+.list {
+    .item {
+        display: flex;
+        img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+        }
+        .round {
+            border-radius: 50%;
+        }
+        .desc {
+            display: flex;
+            flex-direction: column;
+            padding-left: 10px;
+            overflow: hidden;
+            flex: 1;
+            span {
+                font-size: 14px;
+                line-height: 30px;
+                color: #888;
+                overflow: hidden;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+            }
+            span:nth-child(1) {
+                color: #000;
+            }
+        }
+    }
+    .item + .item {
+        margin-top: 20px;
+    }
 }
 </style>

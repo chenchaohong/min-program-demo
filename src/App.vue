@@ -58,6 +58,10 @@ export default {
         align-items: center;
     }
 }
+.van-button {
+    height: 38px !important;
+    line-height: 35px !important;
+}
 /* this rule will be remove */
 * {
   transition: width 2s;

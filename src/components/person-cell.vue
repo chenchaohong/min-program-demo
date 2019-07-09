@@ -55,6 +55,9 @@ export default {
                 white-space:nowrap;
                 text-overflow:ellipsis;
             }
+            span:nth-child(1) {
+                color: #000;
+            }
         }
     }
     .round {
