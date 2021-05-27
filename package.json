@@ -1,8 +1,8 @@
 {
-  "name": "campus",
+  "name": "min-program-water-shop",
   "version": "1.0.0",
   "mpvueTemplateProjectVersion": "0.1.0",
-  "description": "A Mpvue project",
+  "description": "waterShop",
   "author": "kanade <923928480@qq.com>",
   "private": true,
   "scripts": {
@@ -18,22 +18,20 @@
     "dev:my": "node build/dev-server.js my",
     "start:my": "npm run dev:my",
     "build:my": "node build/build.js my",
-    "dev": "node build/dev-server.js wx",
+    "dev": "node build/dev-server.js swan",
     "start": "npm run dev",
     "build": "node build/build.js wx",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "babel-plugin-syntax-export-extensions": "^6.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "flyio": "^0.6.14",
-    "less": "^3.9.0",
-    "less-loader": "^5.0.0",
     "mpvue": "^2.0.0",
     "mpvue-router-patch": "^2.0.0",
-    "vant-weapp": "^0.5.14",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -41,7 +39,7 @@
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-preset-env": "^1.7.0",
+    "babel-preset-env": "^1.3.2",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "chalk": "^2.4.0",
@@ -66,6 +64,8 @@
     "glob": "^7.1.2",
     "html-webpack-plugin": "^3.2.0",
     "http-proxy-middleware": "^0.18.0",
+    "less": "^4.1.1",
+    "less-loader": "^5.0.0",
     "mkdirp": "^0.5.1",
     "mpvue-loader": "^2.0.0",
     "mpvue-template-compiler": "^2.0.0",

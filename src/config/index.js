@@ -1,6 +1,5 @@
 
 const config = {
-    defErrorMessage: '错误信息',
-    apiPrefix: process.env.NODE_ENV === 'production' ? '' : ''
+    defErrorMessage: '错误信息'
 }
 export default config

@@ -1,5 +1,5 @@
+/* eslint-disable */ 
 import Config from '@/config'
-// import {CacheUtil} from '@/services/WxApi'
 import { getPage } from '@/utils/index'
 let Fly = require("flyio/dist/npm/wx")
 let fly = new Fly()
@@ -8,8 +8,8 @@ let isReqLogin = false // 控制多个接口同时超时只调用一次登录
 class Response {
     constructor (res) {
         this.rawData = res
-        this.code = res.code
-        this.messages = res.messages
+        this.retCode = res.retCode
+        this.messages = res.retMsg
         this.data = res.data
         this.wwRequestEntity = res.wwRequestEntity
     }
@@ -20,55 +20,49 @@ class Response {
         }
         if (this.isError()) {
             let message = Config.defErrorMessage
-            console.log(message)
         }
         return Promise.reject(this.messages)
     }
 
     isSuccess () {
-        return this.code === 1
+        return this.retCode === 1
     }
 
     isError () {
-        return this.code === 0
+        return this.retCode === 0
     }
 }
 class ApiManager {
     constructor (apiPrefix) {
-        fly.config.baseURL = apiPrefix || Config.apiPrefix
+        fly.config.baseURL = apiPrefix
         fly.config.timeout = 120000
         fly.interceptors.request.use(request => {
-            wx.getSetting({
-                success: (res) => {
-                    if (!res.authSetting['scope.userInfo']) { // 未授权，跳到授权页面
-                        let url = getPage().route // 当前页面 用于授权后跳转
-                        wx.showLoading({
-                            title: ''
-                        })
-                        wx.redirectTo({
-                            url: '/pages/auth/main?backPage=' + url // 授权页面
-                        })
-                    }
-                }
-            })
+            isReqLogin = false
             const auths = mpvue.getStorageSync('auths') || null
             if (auths) {
                 request.headers.accessToken = auths.accessToken
-                request.headers.userId = auths.userId
+                // request.headers.userId = auths.userId
                 request.headers.openId = auths.openId
             }
             return request
         })
         fly.interceptors.response.use(res => {
-            let response = new Response(res.data)
-            if (res.data.code == '0000') {
-                return Promise.resolve(response)
-            } else if (res.data.code == '608') {
+            // let response = new Response(res.data)
+            if (res.data.retCode == '0000') {
+                return Promise.resolve(res.data)
+            } else if (res.data.retCode == '608') {
                 // 没有权限跳转到授权页面
-                wx.showLoading()
-                this.wxLogin()
+                setTimeout(() => {
+                    this.wxLogin()
+                }, 300)
+            } else if (res.data.retCode == '666') {
+                // 非认证用户
+                wx.showToast({
+                    title: res.data.retMsg,
+                    icon: 'none'
+                })
             }
-            return Promise.reject(res)
+            return Promise.reject(res.data)
         }, error => {
             const { response } = error
             if (!response) return Promise.reject(error)
@@ -76,62 +70,53 @@ class ApiManager {
         })
     }
 
-    post (uri, data, config) {
-        return fly.post(uri, data, config)
-        if (process.env.NODE_ENV === 'production') {
-            return fly.post(uri, data, config)
+    post (url, data, config) {
+        if (process.env.mockFlag) {
+            // 开启模拟数据
+            console.log(`${url} : ${data && JSON.stringify(data)}`)
+            let result = require(`./mock/api${url}`)
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(result)
+                }, 1000)
+            })
         } else {
-            console.log(`url: ${uri}`)
-            console.log(`param: ${data && JSON.stringify(data)}`)
-            let result = require(`./mock${uri}`)
-            return Promise.resolve(result)
+            return fly.post(url, data, config)
         }
     }
 
-    get (uri, data) {
-        return fly.get(uri, data)
+    get (url, data, config) {
+        if (process.env.mockFlag) {
+            // 开启模拟数据
+            console.log(`${url} : ${data && JSON.stringify(data)}`)
+            let result = require(`./mock/api${url}`)
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(result)
+                }, 1000)
+            })
+        } else {
+            return fly.get(url, data, config)
+        }
     }
 
-    put (uri, data) {
-        return fly.put(uri, data)
+    put (url, data) {
+        return fly.put(url, data)
     }
     // 获取微信code
     wxLogin () {
         if (!isReqLogin) {
             isReqLogin = true
-            wx.login({
-                success: (res) => {
-                    this.post('/user/accessToken', {
-                        authorizationCode: res.code
-                    }).then(data => {
-                        isReqLogin = false
-                        mpvue.setStorageSync('auths', data.data)
-                        wx.hideLoading()
-                        // 刷新当前页面
-                        getPage().onReady()
-                    }).catch(err => {
-                        isReqLogin = false
-                        wx.showToast({
-                            title: err.message || '获取会话异常',
-                            icon: 'none'
-                        })
-                        wx.hideLoading()
-                    })
-                },
-                fail: (res) => {
-                    wx.showToast({
-                        title: '微信登陆失败',
-                        icon: 'none'
-                    })
-                    console.log(res)
-                }
+            mpvue.removeStorageSync('auths')
+            wx.navigateTo({
+                url: '/pages/other/auth/main' // 授权页面
             })
         }
     }
 }
 
 export function httpManager (baseURL) {
-    return new ApiManager(baseURL)
+    return new ApiManager(process.env.apiPrefix)
 }
 
 export default httpManager()

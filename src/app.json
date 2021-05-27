@@ -1,30 +1,11 @@
 {
     "pages": [
-        "pages/association/main",
-        "pages/association/acticleDetail/main",
-        "pages/association/organizationList/main",
-        "pages/association/organizationDetail/main",
-        "pages/life/main",
-        "pages/publish/main",
-        "pages/discover/main",
-        "pages/my/main",
-        "pages/my/dynamicDetail/main",
-        "pages/my/update/main",
-        "pages/my/follow/main",
-        "pages/my/sufferFollow/main",
-        "pages/my/like/main",
-        "pages/my/sufferLike/main",
-        "pages/my/organization/main",
-        "pages/my/organization/search/main",
-        "pages/my/organization/apply/main",
-        "pages/person/main",
-        "pages/search/main",
-        "pages/auth/main"
+        "pages/index/main"
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "章鱼校园",
+        "navigationBarTitleText": "demo",
         "navigationBarTextStyle": "black"
     },
     "tabBar": {
@@ -34,50 +15,18 @@
         "borderStyle": "white",
 
         "list": [{
-            "text": "社团",
-            "pagePath": "pages/association/main",
-            "iconPath": "static/tabs/association.png",
-            "selectedIconPath": "static/tabs/association-active.png"
-        }, {
-            "text": "生活",
-            "pagePath": "pages/life/main",
-            "iconPath": "static/tabs/life.png",
-            "selectedIconPath": "static/tabs/life-active.png"
-        }, {
-            "text": "发布",
-            "pagePath": "pages/publish/main",
-            "iconPath": "static/tabs/add.png",
-            "selectedIconPath": "static/tabs/add-active.png"
-        }, {
-            "text": "发现",
-            "pagePath": "pages/discover/main",
-            "iconPath": "static/tabs/discover.png",
-            "selectedIconPath": "static/tabs/discover-active.png"
+            "text": "首页",
+            "pagePath": "pages/index/main",
+            "iconPath": "static/tabs/home.png",
+            "selectedIconPath": "static/tabs/home-active.png"
         }, {
             "text": "我的",
             "pagePath": "pages/my/main",
-            "iconPath": "static/tabs/my.png",
-            "selectedIconPath": "static/tabs/my-active.png"
+            "iconPath": "static/tabs/orders.png",
+            "selectedIconPath": "static/tabs/orders-active.png"
         }],
         "position": "bottom"
     },
     "usingComponents": {
-        "van-row": "/static/vant-weapp/row/index",
-        "van-col": "/static/vant-weapp/col/index",
-        "van-tab": "/static/vant-weapp/tab/index",
-        "van-tabs": "/static/vant-weapp/tabs/index",
-        "van-button": "/static/vant-weapp/button/index",
-        "van-search": "/static/vant-weapp/search/index",
-        "van-icon": "/static/vant-weapp/icon/index",
-        "van-toast": "/static/vant-weapp/toast/index",
-        "van-loading": "/static/vant-weapp/loading/index",
-        "van-cell": "/static/vant-weapp/cell/index",
-        "van-field": "/static/vant-weapp/field/index",
-        "van-dialog": "/static/vant-weapp/dialog/index",
-        "van-radio": "/static/vant-weapp/radio/index",
-        "van-popup": "/static/vant-weapp/popup/index",
-        "van-radio-group": "/static/vant-weapp/radio-group/index",
-        "van-picker": "/static/vant-weapp/picker/index",
-        "van-datetime-picker": "/static/vant-weapp/datetime-picker/index"
     }
 }

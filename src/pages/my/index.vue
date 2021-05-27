@@ -1,132 +1,36 @@
 <template>
     <div class="page">
-        <personHead :personInfo="personInfo" :statistics="statistics" isMy></personHead>
-        <scroll-view scroll-y="true" :style="{height: styleHeight + 'px'}" bindscrolltolower="onPullDownRefresh">
-            <div class="my-team">
-                <cellImg src="/static/images/team.png" text="我的社团" @click="$router.push('/pages/my/organization/main')"></cellImg>
-                <cellImg src="/static/images/question.png" text="常见问题" @click="unDevelop"></cellImg>
-                <cellImg src="/static/images/about.png" text="联系我们" @click="unDevelop"></cellImg>
-            </div>
-            <shareBtn>分享给朋友</shareBtn>
-            <div class="m-dynamic">
-                <personDynamic v-for="(article, aIndex) in articleList" :article="article" :key="aIndex"></personDynamic>
-            </div>
-        </scroll-view>
-        <van-toast id="van-toast" />
+        <span @click="clickHandle">111{{motto}}</span>
     </div>
 </template>
 
 <script>
-import personHead from '@/components/person-head'
-import cellImg from '@/components/cell-img'
-import personDynamic from '@/components/person-dynamic'
-import shareBtn from '@/components/share-btn'
-
 export default {
     components: {
-        personHead,
-        cellImg,
-        personDynamic,
-        shareBtn
+    },
+    computed: {
     },
     data () {
         return {
-            page: {
-                pageIndex: 1,
-                pageSize: 10,
-                hasNext: false,
-                loading: false
-            },
-            userId: '',
-            personInfo: {},
-            statistics: {},
-            articleList: [],
-            styleHeight: ''
+            motto: 'Hello miniprograme'
         }
+    },
+    onLoad () {
     },
     created () {
-        let _this = this
-        wx.getSystemInfo({
-            success: function (res) {
-                let height = res.windowHeight
-                _this.styleHeight = height
-            }
-        })
     },
     mounted () {
-        this.getPersonInfo()
     },
     onShow () {
-        if (mpvue.getStorageSync('isShow')) {
-            this.getPersonInfo()
-            mpvue.removeStorageSync('isShow')
-        }
-    },
-    onPullDownRefresh () {
-        if (this.page.hasNext) {
-            this.page.loading = true
-            this.page.pageIndex += 1
-            this.getArticle()
-        }
     },
     methods: {
-        getPersonInfo () {
-            this.$http.post('/user/baseInfo/get', {
-            }).then(data => {
-                this.personInfo = data.data
-                this.userId = data.data.userId
-                mpvue.setStorageSync('personInfo', this.personInfo)
-                this.getStatistics()
-                this.getArticle()
-            })
-        },
-        getStatistics () {
-            this.$http.post('/user/baseInfo/statistics', {
-                userId: this.userId
-            }).then(data => {
-                this.statistics = data.data
-            })
-        },
-        getArticle () {
-            this.$http.post('/user/article/list', {
-                schoolFellowUserId: this.userId,
-                pageIndex: this.page.pageIndex,
-                pageSize: this.page.pageSize
-            }).then(data => {
-                this.page.loading = false
-                this.page.hasNext = data.page.hasNext
-                this.articleList = this.articleList.concat(data.data)
-            })
-        },
-        unDevelop () {
-            this.$toast('敬请期待')
+        clickHandle (ev) {
+            console.log('clickHandle:', ev)
         }
     }
 }
 </script>
 
-<style lang="less" scoped>
-.my-team {
-    display: flex;
-    /deep/ .m-img-cell {
-        width: 60px;
-        height: 60px;
-        img {
-            width: 30px;
-            height: 30px;
-        }
-        span {
-            font-size: 12px;
-        }
-    }
-    /deep/ .m-img-cell + .m-img-cell {
-        margin-left: 20px;
-    }
-}
-div /deep/ .person-dynamic + .person-dynamic {
-    margin-top: 15px;
-}
-.m-dynamic {
-    
-}
+<style  lang="less" scoped>
+
 </style>
